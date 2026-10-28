@@ -1,0 +1,57 @@
+智护忆途接线单 | ESP32-WROVER-DEV + OV2640
+按 GPIO 编号接线；以 board_pins.h 为准。断电接线，全部共地。
+
+[开发板供电]
+电源模块 OUT+（稳压 5V） -> 开发板 5V
+电源模块 OUT-           -> 开发板 GND
+VIN 须确认支持 5V；电池先接匹配的保护/稳压模块。
+电池、5V 不接 3V3；未确认电源隔离时，USB 与外部供电二选一。
+
+[MPU6050]
+VCC -> 3V3              GND -> GND
+SDA -> GPIO13           SCL -> GPIO14
+AD0 -> GND（0x68）；固件兼容 0x69。INT、XDA、XCL 不接。
+
+[MQ135]
+VCC -> 模块额定电源（常见为 5V）    GND -> GND
+AO  -> 分压节点 -> GPIO32          DO 不接
+分压：AO -- 10kΩ -- 节点 -- 15kΩ -- GND
+节点接 GPIO32，实测须 ≤3.3V；可并 100nF 电容至 GND。
+加热器不由 GPIO 供电。
+
+[L80-R GPS | 9600 baud，8N1]
+VCC -> 3V3（仅限支持 3.3V 的载板）  GND -> GND
+NMEA 输出 -> GPIO33（UART2 RX）     命令输入不接
+通常接 GPS TX；原套件若实测 RX 丝印为输出，则接该 RX。
+其他载板按额定电压供电；勿接开发板 UART0 的 TX/RX。
+
+[OV2640 | WROVER-KIT 引脚]
+XCLK       -> GPIO21
+SIOD / SDA -> GPIO26
+SIOC / SCL -> GPIO27
+D0 / Y2    -> GPIO4
+D1 / Y3    -> GPIO5
+D2 / Y4    -> GPIO18
+D3 / Y5    -> GPIO19
+D4 / Y6    -> GPIO36
+D5 / Y7    -> GPIO39
+D6 / Y8    -> GPIO34
+D7 / Y9    -> GPIO35
+VSYNC      -> GPIO25
+HREF       -> GPIO23
+PCLK       -> GPIO22
+PWDN、RESET：未分配 GPIO，保持板载连接；GND 共地。
+排线方向及供电沿用已验证方案；裸摄像头不按单路 VCC 直连。
+
+[LED / 蜂鸣器]
+板载 LED：GPIO2；无对应灯时 LED_PIN=-1。
+蜂鸣器默认不接。选装可设 GPIO15，经三极管驱动，基极串阻并下拉。
+蜂鸣器按额定电压供电、共地，不直接由 GPIO 驱动大电流负载。
+
+[接线限制]
+GPIO6~11（Flash）、16/17（PSRAM）不接外设。
+摄像头占用脚不并接传感器；不并接共用引脚的 SD/LCD/JTAG。
+GPIO0/2/5/12/15 不强拉启动电平；ESP32 信号均为 3.3V，禁接 5V。
+
+供电及保留引脚参考（具体板卡以原理图为准）：
+https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html

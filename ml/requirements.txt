@@ -1,0 +1,4 @@
+# Isolated training environment only; backend inference uses stdlib JSON.
+numpy==2.2.6
+scipy==1.15.3
+scikit-learn==1.7.2

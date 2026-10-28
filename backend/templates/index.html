@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>监测看板 · 跌倒与定位监护</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/static/ui.css"><link rel="stylesheet" href="/static/photos.css"><link rel="stylesheet" href="/static/model-alerts.css"><script src="/static/shell.js"></script></head>
+<body>
+{% set active_page = 'dashboard' %}
+<div id="offBanner" role="alert">暂时无法连接服务，正在重新连接。当前显示的是最后一次收到的数据。</div>
+{% include '_header.html' %}
+<main class="wrap">
+  <div class="page-heading"><div><h1>监测看板</h1><p>掌握设备状态，及时查看与确认报警。</p></div><div class="photo-toolbar"><a class="btn" href="/photos">查看现场照片</a><span class="clock num" id="clock">等待同步时间</span></div></div>
+  <div id="devOff" class="notice" role="status" aria-live="polite"></div>
+  <section id="pendingAlert" class="notice pending-alert" aria-live="polite" hidden><div><strong id="pendingTitle">有新的报警待确认</strong><p id="pendingDescription">请查看报警记录，确认设备与使用者的情况。</p></div><div class="actions"><a class="btn" href="#recentEvents">查看记录</a><button class="btn" type="button" onclick="markRead()">确认收到</button></div></section>
+  <section class="ml-alert" id="mlPending" aria-label="模型报警待确认" hidden><div><strong id="mlPendingTitle">模型检测到疑似跌倒</strong><p id="mlPendingDetail">请及时确认使用者情况。</p></div><div class="actions"><a class="btn" href="#modelMonitor">查看模型记录</a><button class="btn" id="mlAck" type="button">确认收到模型报警</button></div></section>
+  <section class="overview" aria-label="监测概况"><div>
+    <div class="status-heading"><h2 id="statusTitle">正在连接设备</h2><span id="badge" class="badge off" aria-live="polite">连接中</span></div>
+    <p id="statusDescription" class="status-description">正在获取最新监测数据，请稍候。</p>
+    <div class="device-line"><span>设备 <span id="dev">--</span></span><span>运行 <span id="up">--</span></span><span id="lastUpdate">尚未收到数据</span></div>
+  </div><div class="stats" aria-label="报警统计"><div class="stat"><div class="k">今日报警</div><div class="v"><span id="stToday">--</span><small>次</small></div></div><div class="stat"><div class="k">累计报警</div><div class="v"><span id="stTotal">--</span><small>次</small></div></div><div class="stat"><div class="k">距上次报警</div><div class="v" id="stLast">--</div></div></div></section>
+  <section class="reading-strip" aria-label="实时传感器读数">
+    <div class="reading"><div class="reading-label">加速度模值</div><div class="reading-value"><span id="m">--</span><small>g</small></div><div class="reading-note">冲击参考阈值 2.5 g</div></div>
+    <div class="reading"><div class="reading-label">设备倾角</div><div class="reading-value"><span id="ang">--</span><small>°</small></div><div class="reading-note">倾倒参考阈值 45°</div></div>
+    <div class="reading"><div class="reading-label">空气品质 <span id="airTag" hidden></span></div><div class="reading-value"><span id="air">--</span><small>/ 100</small></div><div class="reading-note">相对指数，数值越高越差</div></div>
+  </section>
+  <section class="panel ml-panel" id="modelMonitor" aria-labelledby="mlTitle">
+    <div class="panel-heading"><div><h2 id="mlTitle">模型跌倒监测 <span class="ml-mode">辅助判断</span></h2><p>电脑分析六轴运动数据，疑似跌倒时提醒确认。</p></div><div class="actions"><button class="btn" id="mlSound" type="button" aria-pressed="false">启用报警声音</button><button class="btn" id="mlRefresh" type="button">刷新模型状态</button></div></div>
+    <p class="ml-sr" id="mlAnnouncement" role="alert" aria-atomic="true"></p>
+    <div class="ml-summary"><div class="ml-connection"><span id="mlBadge" class="badge off" role="status">正在连接</span><p id="mlDescription">正在获取模型状态…</p><p class="section-note" id="mlDevice">等待设备数据</p></div><dl class="ml-readings"><div><dt>当前模型分数</dt><dd id="mlScore">--</dd></div><div><dt>判断阈值</dt><dd id="mlThreshold">--</dd></div><div><dt>连续采样</dt><dd id="mlWindow">-- / 150</dd></div></dl></div>
+    <p class="section-note ml-boundary">分数为模型判断依据，不代表跌倒概率。模型报警只在网页提醒，设备仍按原有规则报警与拍照。</p>
+    <div class="ml-record-heading"><h3>模型报警记录</h3><span class="section-note" id="mlSoundNote">启用声音后，本页面的新模型报警会播放提示音。</span></div>
+    <p class="section-note ml-feedback" id="mlFeedback" role="status" hidden></p><div id="mlEvents"><div class="empty">正在加载模型报警…</div></div>
+    <div class="ml-history-actions"><span class="section-note">时间为后端接收时间 · 确认仅表示本浏览器已读</span><button class="btn" id="mlMore" type="button" hidden>加载更早模型报警</button></div>
+  </section>
+  <section class="panel photo-panel" aria-labelledby="cameraTitle"><div class="panel-heading"><div><h2 id="cameraTitle">现场照片</h2><p>每五分钟定时记录 · 跌倒与空气超标时拍摄</p></div><div class="actions"><button class="btn" id="photoRefresh" type="button">刷新</button><a class="btn" href="/photos">查看全部照片</a></div></div><p id="photoStatus" class="section-note" role="status" aria-live="polite">正在加载照片…</p><div id="photoPreview" class="photo-grid" aria-label="最近现场照片"></div></section>
+  <div class="main-grid">
+    <section class="panel curve-panel" aria-labelledby="curveTitle"><div class="panel-heading"><div><h2 id="curveTitle">监测趋势</h2><p>加速度、倾角与空气变化</p></div><div class="seg" id="curveRange" role="group" aria-label="趋势时间范围"><button type="button" data-seconds="600" aria-pressed="false">10 分钟</button><button type="button" data-seconds="3600" class="active" aria-pressed="true">1 小时</button><button type="button" data-seconds="today" aria-pressed="false">今天</button></div></div>
+      <div class="chart-wrap"><canvas id="curve" role="img" aria-label="加速度、倾角与空气趋势。点击图表可查看对应时刻读数。"></canvas><div id="chartMessage" class="chart-message" role="status">正在加载趋势数据…</div><div id="chartTooltip" class="chart-tooltip" role="status" hidden></div></div>
+      <div class="legend"><span><i style="background:var(--ch-m)"></i>加速度</span><span><i style="background:var(--ch-ang)"></i>倾角</span><span><i style="background:var(--ch-air)"></i>空气</span><span><i style="background:var(--ch-th)"></i>参考阈值</span><span class="lg-gap"><i></i>数据空档</span></div><p id="curveStatus" class="section-note" style="margin-top:12px">点击曲线查看读数 · 空档不连接</p>
+    </section>
+    <section class="panel events-panel" id="recentEvents" aria-labelledby="eventsTitle"><div class="panel-heading"><div><h2 id="eventsTitle">最新报警</h2><p>按时间查看最近发生的事件</p></div><button class="unread" id="unreadChip" type="button" hidden onclick="markRead()"></button></div><div id="events" role="log" aria-live="polite" aria-relevant="additions"><div class="empty">正在加载报警记录…</div></div></section>
+    <section class="panel hist-panel" aria-labelledby="historyTitle"><div class="panel-heading"><div><h2 id="historyTitle">历史事件</h2><p>保留全部报警，支持分类查看</p></div><div class="filters" id="filters" role="group" aria-label="按事件类型筛选历史"><button type="button" data-etype="" class="active" aria-pressed="true" onclick="setFilter(this)">全部</button><button type="button" data-etype="TILT" aria-pressed="false" onclick="setFilter(this)">倾倒</button><button type="button" data-etype="FALL" aria-pressed="false" onclick="setFilter(this)">跌落</button><button type="button" data-etype="AIR" aria-pressed="false" onclick="setFilter(this)">异味</button></div></div><div id="hist"><div class="empty">正在加载历史记录…</div></div><div class="pagination"><span id="histInfo" class="section-note">等待加载</span><div class="actions"><button class="btn" id="histPrev" type="button" onclick="histPage(-1)">上一页</button><button class="btn" id="histNext" type="button" onclick="histPage(1)">下一页</button></div></div></section>
+  </div>
+  <footer class="page-footer"><span>监测状态以设备最新上报为准</span><span>报警确认仅表示本浏览器已读</span></footer>
+</main><div id="overlay" aria-hidden="true"></div><div id="toast" role="alert"></div><script src="/static/app.js"></script><script src="/static/photos.js"></script><script src="/static/model-alerts.js"></script></body></html>

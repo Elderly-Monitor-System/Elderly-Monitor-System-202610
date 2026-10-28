@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>现场照片 · 跌倒与定位监护</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/static/ui.css"><link rel="stylesheet" href="/static/photos.css"><script src="/static/shell.js"></script></head>
+<body>
+{% set active_page = 'photos' %}
+{% include '_header.html' %}
+<main class="wrap">
+  <div class="page-heading"><div><h1>现场照片</h1><p>查看定时记录，以及跌倒、空气超标时的现场画面。</p></div><button class="btn" id="photoRefresh" type="button">刷新照片</button></div>
+  <section class="panel" aria-labelledby="photoListTitle">
+    <div class="panel-heading"><div><h2 id="photoListTitle">拍摄记录</h2><p>每五分钟一张 · 跌倒、空气超标各一张 · 倾倒不拍照</p></div><div class="filters" id="photoFilters" role="group" aria-label="按拍照原因筛选"><button type="button" data-reason="" class="active" aria-pressed="true">全部</button><button type="button" data-reason="FALL" aria-pressed="false">跌倒</button><button type="button" data-reason="AIR" aria-pressed="false">空气超标</button><button type="button" data-reason="TIMER" aria-pressed="false">定时</button><button type="button" data-reason="MANUAL" aria-pressed="false">手动</button></div></div>
+    <div id="photoScope" class="notice photo-scope" hidden><span id="photoScopeText"></span><a class="btn" href="/photos">查看全部照片</a></div>
+    <p id="photoStatus" class="section-note" role="status" aria-live="polite">正在加载照片…</p>
+    <div id="photoGallery" class="photo-grid" aria-label="照片列表"></div>
+    <div class="pagination"><span class="section-note">按上传顺序显示，最新在前</span><button type="button" class="btn" id="photoMore" hidden>加载更早照片</button></div>
+  </section>
+  <footer class="page-footer"><span>照片保存在电脑后端 · 点击画面查看原图</span><span>显示的日期为后端收到照片的北京时间；离线补传会延后</span></footer>
+</main><script src="/static/photos.js"></script></body></html>

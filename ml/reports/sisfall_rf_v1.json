@@ -1,0 +1,263 @@
+{
+  "date_beijing": "2026-10-21",
+  "model_id": "sisfall-rf-v1-20261021",
+  "dataset": "SisFall public mirror (not original server)",
+  "source_url": "https://huggingface.co/datasets/Algo-rythmic/Sisfall_Dataset/resolve/c2956ad/SisFall_dataset.zip?download=true",
+  "dataset_sha256": "7f0dd1583e39fee0f402a6855976eb12517f7eaecdacce871d5b3421793ad665",
+  "seed": 20261021,
+  "versions": {
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "sklearn": "1.7.2"
+  },
+  "subject_splits": {
+    "train": [
+      "SA01",
+      "SA02",
+      "SA05",
+      "SA06",
+      "SA07",
+      "SA08",
+      "SA11",
+      "SA12",
+      "SA13",
+      "SA14",
+      "SA17",
+      "SA18",
+      "SA19",
+      "SA20",
+      "SA23",
+      "SE01",
+      "SE02",
+      "SE04",
+      "SE05",
+      "SE07",
+      "SE08",
+      "SE10",
+      "SE11",
+      "SE13",
+      "SE14"
+    ],
+    "validation": [
+      "SA03",
+      "SA09",
+      "SA15",
+      "SA21",
+      "SE03",
+      "SE09"
+    ],
+    "test": [
+      "SA04",
+      "SA10",
+      "SA16",
+      "SA22",
+      "SE06",
+      "SE12",
+      "SE15"
+    ]
+  },
+  "record_count": 4505,
+  "window_counts": {
+    "train": 87438,
+    "validation": 21780,
+    "test": 26467
+  },
+  "fitted_windows": 61738,
+  "feature_count": 40,
+  "fit_seconds": 3.4535276999813505,
+  "forest": {
+    "trees": 48,
+    "max_depth": 8,
+    "min_samples_leaf": 8
+  },
+  "threshold": 0.8,
+  "validation_candidates": [
+    {
+      "threshold": 0.4,
+      "fall_trials": 300,
+      "weak_peak_matched_falls": 298,
+      "missed_fall_trials": 2,
+      "weak_peak_event_recall": 0.9933333333333333,
+      "adl_trials": 429,
+      "adl_trials_with_false_alert": 8,
+      "false_alerts": 8,
+      "adl_evaluated_hours": 1.9306444444444426,
+      "false_alerts_per_adl_hour": 4.14369410329309,
+      "median_delay_from_heuristic_peak_s": 0.7199999999999998,
+      "weak_window_precision": 0.9422776911076443,
+      "weak_window_recall": 0.9853181076672104,
+      "weak_window_f1": 0.9633173843700159,
+      "weak_window_confusion_tn_fp_fn_tp": [
+        14256,
+        37,
+        9,
+        604
+      ]
+    },
+    {
+      "threshold": 0.5,
+      "fall_trials": 300,
+      "weak_peak_matched_falls": 297,
+      "missed_fall_trials": 3,
+      "weak_peak_event_recall": 0.99,
+      "adl_trials": 429,
+      "adl_trials_with_false_alert": 3,
+      "false_alerts": 3,
+      "adl_evaluated_hours": 1.9306444444444426,
+      "false_alerts_per_adl_hour": 1.5538852887349086,
+      "median_delay_from_heuristic_peak_s": 0.7400000000000002,
+      "weak_window_precision": 0.9741935483870968,
+      "weak_window_recall": 0.9853181076672104,
+      "weak_window_f1": 0.9797242497972425,
+      "weak_window_confusion_tn_fp_fn_tp": [
+        14277,
+        16,
+        9,
+        604
+      ]
+    },
+    {
+      "threshold": 0.6,
+      "fall_trials": 300,
+      "weak_peak_matched_falls": 295,
+      "missed_fall_trials": 5,
+      "weak_peak_event_recall": 0.9833333333333333,
+      "adl_trials": 429,
+      "adl_trials_with_false_alert": 3,
+      "false_alerts": 3,
+      "adl_evaluated_hours": 1.9306444444444426,
+      "false_alerts_per_adl_hour": 1.5538852887349086,
+      "median_delay_from_heuristic_peak_s": 0.7599999999999998,
+      "weak_window_precision": 0.9852216748768473,
+      "weak_window_recall": 0.9787928221859706,
+      "weak_window_f1": 0.9819967266775778,
+      "weak_window_confusion_tn_fp_fn_tp": [
+        14284,
+        9,
+        13,
+        600
+      ]
+    },
+    {
+      "threshold": 0.7,
+      "fall_trials": 300,
+      "weak_peak_matched_falls": 291,
+      "missed_fall_trials": 9,
+      "weak_peak_event_recall": 0.97,
+      "adl_trials": 429,
+      "adl_trials_with_false_alert": 1,
+      "false_alerts": 1,
+      "adl_evaluated_hours": 1.9306444444444426,
+      "false_alerts_per_adl_hour": 0.5179617629116362,
+      "median_delay_from_heuristic_peak_s": 0.7599999999999998,
+      "weak_window_precision": 0.9949324324324325,
+      "weak_window_recall": 0.9608482871125612,
+      "weak_window_f1": 0.9775933609958506,
+      "weak_window_confusion_tn_fp_fn_tp": [
+        14290,
+        3,
+        24,
+        589
+      ]
+    },
+    {
+      "threshold": 0.8,
+      "fall_trials": 300,
+      "weak_peak_matched_falls": 287,
+      "missed_fall_trials": 13,
+      "weak_peak_event_recall": 0.9566666666666667,
+      "adl_trials": 429,
+      "adl_trials_with_false_alert": 0,
+      "false_alerts": 0,
+      "adl_evaluated_hours": 1.9306444444444426,
+      "false_alerts_per_adl_hour": 0.0,
+      "median_delay_from_heuristic_peak_s": 0.8200000000000003,
+      "weak_window_precision": 1.0,
+      "weak_window_recall": 0.9461663947797716,
+      "weak_window_f1": 0.972338642078793,
+      "weak_window_confusion_tn_fp_fn_tp": [
+        14293,
+        0,
+        33,
+        580
+      ]
+    },
+    {
+      "threshold": 0.85,
+      "fall_trials": 300,
+      "weak_peak_matched_falls": 282,
+      "missed_fall_trials": 18,
+      "weak_peak_event_recall": 0.94,
+      "adl_trials": 429,
+      "adl_trials_with_false_alert": 0,
+      "false_alerts": 0,
+      "adl_evaluated_hours": 1.9306444444444426,
+      "false_alerts_per_adl_hour": 0.0,
+      "median_delay_from_heuristic_peak_s": 0.8399999999999999,
+      "weak_window_precision": 1.0,
+      "weak_window_recall": 0.9314845024469821,
+      "weak_window_f1": 0.964527027027027,
+      "weak_window_confusion_tn_fp_fn_tp": [
+        14293,
+        0,
+        42,
+        571
+      ]
+    },
+    {
+      "threshold": 0.9,
+      "fall_trials": 300,
+      "weak_peak_matched_falls": 279,
+      "missed_fall_trials": 21,
+      "weak_peak_event_recall": 0.93,
+      "adl_trials": 429,
+      "adl_trials_with_false_alert": 0,
+      "false_alerts": 0,
+      "adl_evaluated_hours": 1.9306444444444426,
+      "false_alerts_per_adl_hour": 0.0,
+      "median_delay_from_heuristic_peak_s": 0.8600000000000003,
+      "weak_window_precision": 1.0,
+      "weak_window_recall": 0.9102773246329527,
+      "weak_window_f1": 0.9530315969257045,
+      "weak_window_confusion_tn_fp_fn_tp": [
+        14293,
+        0,
+        55,
+        558
+      ]
+    }
+  ],
+  "test": {
+    "fall_trials": 375,
+    "weak_peak_matched_falls": 346,
+    "missed_fall_trials": 29,
+    "weak_peak_event_recall": 0.9226666666666666,
+    "adl_trials": 512,
+    "adl_trials_with_false_alert": 0,
+    "false_alerts": 0,
+    "adl_evaluated_hours": 2.2827722222222184,
+    "false_alerts_per_adl_hour": 0.0,
+    "median_delay_from_heuristic_peak_s": 0.8599999999999994,
+    "weak_window_precision": 0.9971590909090909,
+    "weak_window_recall": 0.9116883116883117,
+    "weak_window_f1": 0.9525101763907734,
+    "weak_window_confusion_tn_fp_fn_tp": [
+      17122,
+      2,
+      68,
+      702
+    ]
+  },
+  "export_max_score_error_on_all_test_windows": 9.992007221626409e-16,
+  "model_bytes": 182484,
+  "model_sha256": "0580f62808ed3174e15b75761c3391c754dd19b95505facaaf279c583c9c6aed",
+  "limitations": [
+    "Fall event timing uses the largest acceleration peak, NOT frame/video annotations.",
+    "Ambiguous windows from fall trials excluded from fitting; all evaluated in event replay.",
+    "Mostly simulated young-adult falls; SE06 only older fall performer, held out in test.",
+    "Waist placement; chest placement and real MPU6050 domain not validated.",
+    "Public sensor filtering approximates MPU6050 hardware DLPF, not identical.",
+    "ADL false alerts/hour measured on short scripted trials, not free-living use.",
+    "Scores uncalibrated; shadow mode does not trigger device alarms/photos."
+  ]
+}

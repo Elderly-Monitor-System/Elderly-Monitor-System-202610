@@ -1,0 +1,12 @@
+{
+  "name": "zhihu-yitu-source",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test:ui:model": "node backend/tests/test_model_alerts_ui.cjs",
+    "test:ui:photos": "node backend/tests/test_photos_ui.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

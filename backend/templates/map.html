@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>位置地图 · 跌倒与定位监护</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/static/ui.css"><script src="/static/shell.js"></script></head>
+<body>
+{% set active_page = 'map' %}
+{% include '_header.html' %}
+<main class="wrap">
+  <div class="page-heading"><div><h1>位置地图</h1><p>查看设备最新位置，回溯今日与历史轨迹。</p></div><span class="section-note">查询时间统一为北京时间</span></div>
+  <div class="map-layout">
+    <section class="map-canvas-panel" aria-label="定位地图">
+      <div class="map-toolbar"><div class="seg" role="group" aria-label="地图查看模式"><button type="button" id="realtimeButton" class="active" aria-pressed="true">实时定位</button><button type="button" id="todayTrackButton" aria-pressed="false">今日轨迹</button><button type="button" id="historyButton" aria-pressed="false">历史轨迹</button></div><button type="button" class="btn" id="centerPosition">回到设备位置</button></div>
+      <div id="container" role="region" aria-label="高德地图，显示设备位置与轨迹"></div>
+      <div id="mapMessage" class="map-message" role="status"><strong>正在加载地图</strong><p id="mapMessageText">地图就绪后，将显示设备最近一次有效定位。</p><button type="button" class="btn" id="mapRetry" onclick="location.reload()" hidden>重新加载</button></div>
+      <div class="map-caption">地图标记表示最近一次有效定位，请同时留意右侧的更新时间。</div>
+    </section>
+    <aside class="map-sidebar" aria-label="定位信息与轨迹查询">
+      <section class="location-info"><h2>最近定位</h2><span id="gpsStatus" class="gps-status" role="status">正在获取定位</span><p id="gpsFreshness" class="gps-freshness">等待有效定位</p><div id="gpsTime" class="gps-time">定位时间：暂无</div><div id="modeStatus" class="mode-status">当前模式：实时定位</div><details class="coordinate-details"><summary>查看原始坐标</summary><div class="coordinate-row">经度 <span id="longitude">--</span></div><div class="coordinate-row">纬度 <span id="latitude">--</span></div><p class="section-note">WGS84 坐标，地图显示自动转换。</p></details></section>
+      <section id="historyPanel" class="history-panel"><h2 class="history-title">历史轨迹查询</h2><p class="panel-subtitle">选择最近日期或自定义日期，可进一步查询具体时刻前后 5 分钟的定位。</p><label class="field" for="historyDateSelect">查询日期<select id="historyDateSelect"><option value="">请选择日期</option></select></label><div id="customDateWrap" style="display:none"><label class="field" for="customDate">自定义日期<input type="date" id="customDate"></label></div><label class="field" for="historyTimeMode">查询范围<select id="historyTimeMode"><option value="">全天轨迹</option><option value="time">具体时刻附近的位置</option></select></label><div id="historyTimeWrap" style="display:none"><label class="field" for="historyTime">具体时刻<input type="time" id="historyTime" step="1"></label></div><button type="button" id="queryHistoryButton" class="map-button">查询历史轨迹</button></section>
+      <section id="todayQueryPanel" class="today-query-panel"><h2 class="history-title">今日时间查询</h2><p class="panel-subtitle">默认显示完整今日轨迹。选择时刻后，可查找前后 5 分钟内最近的定位。</p><label class="field" for="todayTime">具体时刻<input type="time" id="todayTime" step="1"></label><button type="button" id="queryTodayButton" class="map-button">查询今天时刻</button></section>
+    </aside>
+  </div>
+  <div id="mapFeedback" class="map-feedback" role="status" aria-live="polite" hidden></div>
+  <footer class="page-footer"><span>定位可能受到室内环境与卫星信号影响</span><span>数据与监测看板来自同一设备服务</span></footer>
+</main>
+<script>
+window._AMapSecurityConfig={
+    securityJsCode:"YOUR_AMAP_SECURITY_JS_CODE"
+};
+</script>
+<script src="https://webapi.amap.com/loader.js" defer></script>
+<script src="/static/map.js" defer></script>
+</body></html>
